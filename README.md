@@ -1,7 +1,10 @@
 # CowDung
 The CowDung Game is a simple game implemented using Python and Flask. The objective of the game is to guess a randomly generated 4-digit number within a limited number of attempts. It provides players with clues in the form of "cow" and "dung" values to guide them towards the correct answer.
 
-Game Rules:
+# Link to Play Game
+https://cowdung.onrender.com/
+
+# Game Rules:
 
 1)The game generates a random 4-digit number that the player needs to guess. 
 
@@ -22,3 +25,5 @@ Game Rules:
 7)If the player exhausts all attempts without guessing the correct number, they lose the game.
 
 8)After the game ends, players have the option to play again and challenge themselves to improve their guessing skills.
+
+
