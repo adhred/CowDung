@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>COW DUNG</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #82b3e0;
+        }
+        .container {
+            max-width: 500px;
+            margin-top: 50px;
+            background-color: #cfe1ee;
+            border-radius: 5px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .title {
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+            font-size: 24px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .btn-block {
+            margin-top: 20px;
+        }
+        .table-container {
+            margin-top: 40px;
+        }
+        .table {
+            background-color: #ffffff;
+        }
+        .table th,
+        .table td {
+            vertical-align: middle;
+        }
+        .result-msg {
+            text-align: center;
+            font-weight: bold;
+            margin-top: 30px;
+            font-size: 18px;
+        }
+        .play-again-btn {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">COW DUNG</h1>
+        {% if status == 'new' %}
+        <form action="/guess" method="POST">
+            <div class="form-group">
+                <label for="guess-value">Enter your guess (4-digit number):</label>
+                <input type="number" class="form-control" id="guess-value" name="guess-value" min="1000" max="9999" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+        </form>
+        {% elif status.startswith('CORRECT') %}
+        <h3 class="result-msg">{{ status }}</h3>
+        <div class="play-again-btn">
+            <a href="/destroy_session" class="btn btn-primary">Play Again</a>
+        </div>
+        {% elif status.startswith('Out of guesses') %}
+        <h3 class="result-msg">{{ status }}</h3>
+        <div class="play-again-btn">
+            <a href="/destroy_session" class="btn btn-primary">Play Again</a>
+        </div>
+        {% else %}
+        <h3 class="result-msg">{{ status }}</h3>
+        <form action="/guess" method="POST">
+            <div class="form-group">
+                <label for="guess-value">Enter your guess (4-digit number):</label>
+                <input type="number" class="form-control" id="guess-value" name="guess-value" min="1000" max="9999" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+        </form>
+        {% endif %}
+
+        {% if session['clues'] %}
+        <div class="table-container">
+            <h4>Previous Guesses:</h4>
+            <table class="table table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Guess</th>
+                        <th>Cow</th>
+                        <th>Dung</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for clue in session['clues'] %}
+                    <tr>
+                        <td>{{ clue['guess'] }}</td>
+                        <td>{{ clue['cow'] }}</td>
+                        <td>{{ clue['dung'] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
